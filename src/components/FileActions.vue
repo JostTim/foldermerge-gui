@@ -5,11 +5,6 @@ defineProps<{
     file: { key: string; value: string; file_uuid: string, file_matches: Array<string> }
 }>()
 
-// Example data, replace with actual data source
-// const files = ref([
-//   { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1', file_matches: ["test","test"] },
-// ]);
-
 function showCopiedPopup(target: HTMLElement) {
     const popup = document.createElement('div');
     popup.innerText = 'Copied !';
@@ -54,9 +49,7 @@ function copyToClipboard(path: string, target : EventTarget | null) {
         console.error('Unable to copy to clipboard', err);
     });
 }
-
 </script>
-
 
 <template>
     <div class = "file-container"> 
@@ -81,9 +74,7 @@ function copyToClipboard(path: string, target : EventTarget | null) {
     </div>
 </template>
 
-
 <style scoped>
-
 .material-symbols-outlined {
     color: inherit;
     cursor: pointer;

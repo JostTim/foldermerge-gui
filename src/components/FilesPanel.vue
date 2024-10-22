@@ -6,24 +6,11 @@ defineProps<{
 }>()
 
 
-// document.querySelectorAll('.folder').forEach(function (folder) {
-//     folder.classList.toggle('open', true);
-//     // content = this.nextElementSibling.style.display = 'block'
-//     /* Change true to false and 'none' to 'block' to be unfolded or folder by default */
-
-//     folder.addEventListener('click', function () {
-//         folder.classList.toggle('open');
-//     });
-// });
-
 function toggleOpen(target: EventTarget | null){
     if (target === null) {
         return;
     }
     let element = target as HTMLElement;
-    // element.classList.toggle('open');
-    // // @ts-ignore
-    // element.parentNode.querySelector('.folder-content').classList.toggle('open');
     // @ts-ignore
     element.parentNode.classList.toggle('open');
 }
