@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+
 
 defineProps<{
-  path: string
+    file: { key: string; value: string; file_uuid: string, file_matches: Array<string> }
 }>()
 
 // Example data, replace with actual data source
-const fileMatches = ref(['uuid1', 'uuid2']);
-const files = ref([
-  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
-  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
-  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
-  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
-  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
-  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
-  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
-  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
-  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
-  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
-]);
+// const files = ref([
+//   { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1', file_matches: ["test","test"] },
+// ]);
 
 function showCopiedPopup(target: HTMLElement) {
     const popup = document.createElement('div');
@@ -65,33 +55,12 @@ function copyToClipboard(path: string, target : EventTarget | null) {
     });
 }
 
-// function copyToClipboard(target: EventTarget | null) {
-//     if (target === null) {
-//         return;
-//     }
-//     const element = target as HTMLElement;
-//     const path = element.innerText;
-//     const separator = path.includes('/') ? '/' : '\\';
-//     const dirname = path.substring(0, path.lastIndexOf(separator) + 1);
-//     console.log(dirname)
-//     navigator.clipboard.writeText(dirname).then(function () {
-//         console.log('Path copied to clipboard successfully!');
-//         element.classList.add('flashing');
-//         setTimeout(function () {
-//             element.classList.remove('flashing');
-//         }, 50);
-
-//     }, function (err) {
-//         console.error('Unable to copy to clipboard', err);
-//     });
-// }
-
 </script>
 
-<template>
 
-    <div class = "file-container" v-for="file in files" :key="file.file_uuid">
-        <table class="file-content hint-target" data-matches-uuids="{file_matches}">
+<template>
+    <div class = "file-container"> 
+        <table class="file-content hint-target highlighteable" :data-matches-uuids="file.file_matches">
             <tbody>
                 <tr class="additional-info">
                     <td>
@@ -107,10 +76,11 @@ function copyToClipboard(path: string, target : EventTarget | null) {
             </tbody>
         </table>
         <div class="stretch"></div>
-        <div class="action-button" :id="`${file.file_uuid}_copier`">Copy file to reference 📥</div>
-        <div class="action-button" :id="`${file.file_uuid}_deleter`">Delete file 🗑</div>
+        <div class="action-button highlighteable" :id="`${file.file_uuid}_copier`">Copy file to reference 📥</div>
+        <div class="action-button highlighteable" :id="`${file.file_uuid}_deleter`">Delete file 🗑</div>
     </div>
 </template>
+
 
 <style scoped>
 
@@ -124,25 +94,15 @@ function copyToClipboard(path: string, target : EventTarget | null) {
     width: 190px;
     line-height: 30px;
     align-content: center;
-    border-radius: 2px;
     text-align: center;
     display: inline-block;
     vertical-align: middle;
-    background-color: var(--color-background-mute);
-    color: var(--color-text);
     margin-left: 3px;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--color-border);
     user-select: none;
 }
 
 .action-button:hover {
     cursor: pointer;
-    color: var(--color-heading);
-    background-color: var(--color-border-hover);
-    border-color: var(--color-green);    
 }
 
 .action-button:active  {
@@ -195,23 +155,8 @@ function copyToClipboard(path: string, target : EventTarget | null) {
 
 .file-content {
     position: relative;
-    border-radius: 2px;
-    border-style: solid;
-    border-width: 1px;
-    padding: 0px 5px;
+    padding: 0px 2px;
     margin-bottom: 0px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    color: var(--color-text);
-    background-color: var(--color-background-mute);
-    border-color: var(--color-border);
-    overflow: hidden;
-    z-index: 1;
-}
-
-.file-content:hover {
-    color: var(--color-background-soft);
-    background-color: var(--color-border-hover);
-    border-color: var(--color-green);
 }
 
 .file-content:before {
@@ -239,16 +184,6 @@ function copyToClipboard(path: string, target : EventTarget | null) {
 
 .file-content:hover .category_value {
     background-color: var(--color-background);
-}
-
-.folder-content .file-content:last-child {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.folder-content .file-content:first-child {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
 .file-container {
@@ -279,9 +214,19 @@ table tr:last-child {
     
 }
 
+.folder-content .file-container:first-child .file-content {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.folder-content .file-container:last-child .file-content {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 </style>
 
-<!-- A non scoped style  -->
+<!-- non scoped style for the copied popup-->
 <style>
 .copied-popup {
     position: absolute;

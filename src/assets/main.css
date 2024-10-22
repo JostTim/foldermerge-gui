@@ -33,3 +33,19 @@ main {
 }
 
 @media (min-width: 1024px) {}
+
+.highlighteable:hover {
+  background-color: var(--color-border-hover);
+  border-color: var(--color-green);
+  color: var(--color-heading);
+}
+
+.highlighteable {
+  color: var(--color-text);
+  background-color: var(--color-background-mute);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border-color: var(--color-border);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+}

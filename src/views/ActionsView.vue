@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import ActionPanel from '../components/ActionPanel.vue'
+import FilesPanel from '../components/FilesPanel.vue'
+
+const files = [{key: "Prout", value: "thing/prout/blabla", file_uuid: "zdaz", file_matches: ["187165"] },
+                {key: "Prout", value:  "thing/prout/blabla", file_uuid: "187165", file_matches: [] }]
+
+defineProps<{
+
+}>()
+
 </script>
 
 <template>
     <main>
-        <div class="actions">
-            <ActionPanel path="Prout/monfion"></ActionPanel>
+        <div class="tree_view">
+            <FilesPanel :files="files" foldername="Foldername"></FilesPanel>
         </div>
     </main>
 </template>
