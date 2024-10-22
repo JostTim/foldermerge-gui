@@ -9,9 +9,16 @@ defineProps<{
 const fileMatches = ref(['uuid1', 'uuid2']);
 const files = ref([
   { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
-  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' }
+  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
+  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
+  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
+  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
+  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
+  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
+  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
+  { key: 'Testfile', value: 'C:/test/mapath/Testfile', file_uuid: 'uuid1' },
+  { key: 'Video.avi', value: 'C:/ani/path/amafufu/Video.avi', file_uuid: 'uuid2' },
 ]);
-
 
 function showCopiedPopup(target: HTMLElement) {
     const popup = document.createElement('div');
@@ -28,7 +35,7 @@ function showCopiedPopup(target: HTMLElement) {
         popup.classList.add('fade-out');
     }, 900); // Start fade-out after 900ms
 
-    popup.addEventListener('animationend', () => {
+    popup.addEventListener('transitionend', () => {
         document.body.removeChild(popup);
     });
 }
