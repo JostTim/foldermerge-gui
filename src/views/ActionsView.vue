@@ -1,34 +1,40 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import FilesPanel from '../components/FilesPanel.vue'
+import Tree from '../components/Tree.vue'
 import axios from 'axios';
 
-// const files = [{key: "Prout", value: "thing/prout/blabla", file_uuid: "zdaz", file_matches: ["187165"] },
-//                 {key: "Prout", value:  "thing/prout/blabla", file_uuid: "187165", file_matches: [] }]
+interface File {
+  key: string;
+  value: string;
+  file_uuid: string;
+  file_matches: string[];
+}
 
-const files = ref([]);
-                
+interface Folder {
+  name: string;
+  files: File[];
+  folders: Folder[];
+}
+
+const tree = ref<Folder>({
+  name: '',
+  files: [],
+  folders: []
+});
+
 onMounted(async () => {
   try {
     const response = await axios.get('http://localhost:5000/api/data');
     console.log(response.data);
-    files.value = response.data;
+    tree.value = response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 });
-
-
-defineProps<{
-
-}>()
-
 </script>
 
 <template>
-    <main>
-        <div class="tree_view">
-            <FilesPanel :files="files" foldername="Foldername"></FilesPanel>
-        </div>
-    </main>
+  <main>
+    <Tree :tree="tree"></Tree>
+  </main>
 </template>
